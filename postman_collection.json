@@ -1,0 +1,157 @@
+curl -X 'GET' \
+  'http://localhost:8000/api/credits/1' \
+  -H 'accept: application/json'
+
+  {
+  "user_id": 1,
+  "credits": 3,
+  "last_updated": "2025-09-04T15:58:24.059683"
+}
+
+        curl -X 'POST' \
+  'http://localhost:8000/api/credits/1/add' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "amount": 2
+}'
+
+        {
+  "success": true,
+  "message": "Credits added successfully",
+  "data": {
+    "credits": 5,
+    "last_updated": "2025-09-04T17:32:57.914836"
+  },
+  "error": null
+}
+
+        curl -X 'PATCH' \
+  'http://localhost:8000/api/credits/1/reset' \
+  -H 'accept: application/json'
+
+
+        {
+  "success": true,
+  "message": "Credits reset successfully",
+  "data": {
+    "credits": 0,
+    "last_updated": "2025-09-04T17:33:32.916443"
+  },
+  "error": null
+}
+
+
+
+curl -X 'GET' \
+  'http://localhost:8000/api/schema/tables' \
+  -H 'accept: application/json'
+
+
+  {
+  "success": true,
+  "message": "Tables retrieved successfully",
+  "operation": "get_all_tables",
+  "data": {
+    "tables": [
+      {
+        "table_name": "credits",
+        "column_count": 4,
+        "has_primary_key": true
+      },
+      {
+        "table_name": "users",
+        "column_count": 4,
+        "has_primary_key": true
+      }
+    ]
+  },
+  "sql_executed": null,
+  "warnings": []
+}
+
+
+curl -X 'GET' \
+  'http://localhost:8000/api/schema/table/credits' \
+  -H 'accept: application/json'
+
+
+  {
+  "success": true,
+  "table_name": "credits",
+  "columns": [
+    {
+      "name": "id",
+      "type": "integer",
+      "nullable": false,
+      "default": "nextval('credits_id_seq'::regclass)"
+    },
+    {
+      "name": "user_id",
+      "type": "integer",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "name": "credits",
+      "type": "integer",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "name": "last_updated",
+      "type": "timestamp without time zone",
+      "nullable": true,
+      "default": null
+    }
+  ],
+  "indexes": [
+    "credits_pkey",
+    "ix_credits_id"
+  ]
+}
+
+
+
+curl -X 'POST' \
+  'http://localhost:8000/api/schema/update' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "operation": "add_column",
+  "table_name": "users",
+  "column_definition": {
+    "name": "age",
+    "type": "INTEGER",
+    "size": 5,
+    "nullable": true,
+    "default": 0,
+    "unique": false
+  },
+  "column_name": "age"
+}'
+
+
+{
+  "success": true,
+  "message": "Column added successfully",
+  "table_name": "users",
+  "column_added": "age",
+  "sql_executed": "ALTER TABLE users ADD COLUMN age INTEGER DEFAULT 0"
+}
+
+curl -X 'DELETE' \
+  'http://localhost:8000/api/schema/table/users/column/age' \
+  -H 'accept: application/json'
+
+{
+  "success": true,
+  "message": "Column age dropped from users",
+  "operation": "drop_column",
+  "data": {
+    "table": "users",
+    "dropped_column": "age"
+  },
+  "sql_executed": "ALTER TABLE users DROP COLUMN age",
+  "warnings": []
+}

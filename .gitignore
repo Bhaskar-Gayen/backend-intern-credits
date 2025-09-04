@@ -1,0 +1,41 @@
+# Python cache & bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.env/
+.env.*
+
+# IDE / editor settings
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+logs/
+*.sqlite3
+*.db
+
+# Packages
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Pytest / coverage
+htmlcov/
+.coverage
+.tox/
+.pytest_cache/
+
+# Static / media files (if generated)
+static/
+media/
+
+# Others
+.DS_Store
+*.bak
